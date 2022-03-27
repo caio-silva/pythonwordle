@@ -73,7 +73,7 @@ def cracker_wrapper(word, results):
             elif char == "out-of-place":
                 wordBuilder[index] = "."
                 badPos.add(word[index])
-            elif char == "no-way" and char not in inc and char not in badP:
+            elif char == "no-way" and word[index] not in inc and word[index] not in badP and not word.count(char) > 1:
                 wordBuilder[index] = "."
                 exclude.add(word[index])
 
@@ -134,7 +134,7 @@ def run_game(is_test):
         else:
             print('That is not a valid 5 letter word')
 
-    print("YOU ARE A LOSER THE ANSWER WAS", answer)
+    print("\033[41mYOU ARE A LOSER THE ANSWER WAS " + answer + "\033[m")
     return False
 
 
@@ -171,7 +171,8 @@ def main():
         run_test()
     else:
         run_game(False)
-    print("Time elapsed in secs: " + str(time.time() - ts))
+
+    print("Time elapsed in secs: " + str(round(time.time() - ts, 2)))
 
 
 # Press the green button in the gutter to run the script.
