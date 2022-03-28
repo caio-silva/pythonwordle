@@ -1,0 +1,1 @@
+errors_output_2.txt contains all words that break the cracker
