@@ -1,0 +1,1 @@
+Total: 21832 - Done: 21831 - Wins: 17181 - Losses: 9368 - Errors: 12464 - Time lapsed: 9936.0
