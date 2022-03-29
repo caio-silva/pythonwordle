@@ -115,9 +115,8 @@ def cracker_wrapper(word, results):
 
 
 # pass True to run cracker
-def run_game(is_test):
+def run_game(is_test, answer = random.choice(filteredWords)):
     guessed = None
-    answer = random.choice(filteredWords)
     guesses = 6
 
     if is_test:
@@ -140,7 +139,10 @@ def run_game(is_test):
             word = input("Please guess a word: ")
 
         if is_valid_word(word):
-            guesses -= 1
+            if is_test:
+                guesses = 5
+            else:
+                guesses -= 1
             if word == answer:
                 print("\033[42;30mWELL DONE, " + word + "  IS THE RIGHT ANSWER!, You guessed on your " + str(
                     6 - guesses) + " guess." + "\033[m")
@@ -156,21 +158,36 @@ def run_game(is_test):
     return False
 
 
-def run_test():
+def run_test(all_words = False):
     count = 0
     win = 0
     loose = 0
-    n = int(input("How many games? "))
-    for i in range(n):
-        try:
-            w = run_game(True)
-            if w:
-                win += 1
-            else:
+    if all_words:
+        filteredWordsCopy = filteredWords.copy()
+        for i in range(len(filteredWordsCopy)):
+            print("Cracking...")
+            print(str(i) + " " + filteredWordsCopy[i])
+            try:
+                w = run_game(True, filteredWordsCopy[i])
+                if w:
+                    win += 1
+                else:
+                    loose += 1
+            except:
+                count += 1
                 loose += 1
-        except:
-            count += 1
-            loose += 1
+    else:
+        n = int(input("How many games? "))
+        for i in range(n):
+            try:
+                w = run_game(True)
+                if w:
+                    win += 1
+                else:
+                    loose += 1
+            except:
+                count += 1
+                loose += 1
     print("\n\n")
     print("-" * 30)
     print("Total:  " + str(n) + " games")
@@ -291,7 +308,7 @@ def main():
         word = input("Enter the word to be used as answer: ")
         run_specific_word(word)
     elif answer1 == 4:
-        run_all_test(ts)
+        run_test(True)
     else:
         run_test()
 
